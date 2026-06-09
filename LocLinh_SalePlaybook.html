@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sale Playbook - Loc Linh Solar</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#F0F7F2;color:#1A2E22;font-size:14px}
+.hd{background:linear-gradient(135deg,#0F6B3A,#14A44D);padding:14px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:99;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.hd-logo{width:42px;height:42px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#0F6B3A;border:2px solid #E2B23B;flex-shrink:0}
+.hd h1{font-size:14px;font-weight:700;color:#fff;line-height:1.3}
+.hd p{font-size:11px;color:rgba(255,255,255,.75);margin-top:2px}
+.wrap{padding:14px}
+.card{background:#fff;border-radius:14px;border:2px dashed rgba(15,107,58,.3);padding:14px}
+.lbl{font-size:11px;font-weight:700;color:#0F6B3A;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+textarea{width:100%;min-height:110px;border:1.5px solid rgba(15,107,58,.2);border-radius:10px;padding:10px;font-family:Arial,Helvetica,sans-serif;font-size:13px;background:#F0F7F2;outline:none;resize:vertical;line-height:1.6}
+textarea:focus{border-color:#14A44D}
+.btns{display:flex;gap:8px;margin-top:10px}
+.btn-main{flex:1;background:linear-gradient(135deg,#0F6B3A,#14A44D);color:#fff;border:none;border-radius:10px;padding:13px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.btn-main:disabled{opacity:.6;cursor:not-allowed}
+.btn-clr{background:#fff;color:#5A7A65;border:1.5px solid rgba(15,107,58,.2);border-radius:10px;padding:13px 14px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.spinner{display:none;text-align:center;padding:28px}
+.spinner.on{display:block}
+.spin{width:36px;height:36px;border:3px solid #F0F7F2;border-top:3px solid #14A44D;border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 10px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.out{display:none;padding:0 14px 40px}
+.out.on{display:block}
+.sec{font-size:10px;font-weight:700;color:#5A7A65;text-transform:uppercase;letter-spacing:1px;margin:14px 0 10px;display:flex;align-items:center;gap:7px}
+.sec:after{content:'';flex:1;height:1px;background:rgba(15,107,58,.12)}
+.lcard{background:#fff;border-radius:14px;border:2px solid #E2B23B;overflow:hidden;margin-bottom:12px}
+.lcard-h{background:linear-gradient(135deg,#0F6B3A,#14A44D);padding:10px 14px}
+.lcard-h span{font-size:12px;font-weight:700;color:#fff}
+.lfields{padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.lf{background:#F0F7F2;border-radius:9px;padding:8px 10px}
+.lf.full{grid-column:1/-1}
+.lf-l{font-size:9px;font-weight:700;color:#5A7A65;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.lf-v{font-size:13px;font-weight:700;color:#1A2E22}
+.lf-v.hot{color:#0F6B3A}
+.ubar{background:linear-gradient(90deg,#E53935,#FF6B6B);padding:9px 14px}
+.ubar span{font-size:12px;font-weight:700;color:#fff}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
+.tabs::-webkit-scrollbar{height:3px}
+.tabs::-webkit-scrollbar-thumb{background:rgba(15,107,58,.2);border-radius:2px}
+.tab{flex-shrink:0;padding:7px 12px;border-radius:50px;border:1.5px solid rgba(15,107,58,.2);background:#fff;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#5A7A65;cursor:pointer;white-space:nowrap}
+.tab.on{background:#0F6B3A;color:#fff;border-color:#0F6B3A}
+.tc{display:none}
+.tc.on{display:block}
+.ana-box{background:linear-gradient(135deg,rgba(15,107,58,.06),rgba(20,164,77,.03));border:1px solid rgba(15,107,58,.14);border-radius:11px;padding:12px;margin-bottom:11px}
+.ana-t{font-size:10px;font-weight:700;color:#0F6B3A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.ar{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid rgba(15,107,58,.07);gap:8px}
+.ar:last-child{border:none}
+.ar-l{font-size:12px;color:#5A7A65;font-weight:500;flex-shrink:0}
+.ar-r{font-size:12px;font-weight:700;color:#1A2E22;text-align:right}
+.ar-r.g{color:#0F6B3A}
+.ar-r.w{color:#F57C00}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;background:rgba(20,164,77,.1);color:#14A44D}
+.sb{background:#F0F7F2;border-radius:11px;padding:12px;margin-bottom:9px;position:relative}
+.sb-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px}
+.sb-txt{font-size:13px;line-height:1.75;white-space:pre-wrap;padding-right:70px;word-break:break-word}
+.cpbtn{position:absolute;top:9px;right:9px;background:#0F6B3A;color:#fff;border:none;border-radius:7px;padding:5px 9px;font-size:11px;font-weight:700;cursor:pointer;font-family:Arial,Helvetica,sans-serif}
+.cpbtn.ok{background:#E2B23B;color:#333}
+.step{background:#fff;border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:0 2px 7px rgba(0,0,0,.05)}
+.step-h{display:flex;align-items:center;gap:10px;padding:12px 13px;cursor:pointer}
+.snum{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.si-t{font-size:13px;font-weight:700;flex:1}
+.si-s{font-size:11px;color:#5A7A65;margin-top:1px}
+.sarr{font-size:16px;color:#5A7A65;transition:transform .2s}
+.step.op .sarr{transform:rotate(90deg)}
+.step-b{display:none;border-top:1px solid #F0F7F2;padding:12px}
+.step.op .step-b{display:block}
+.obj{background:#fff;border-radius:11px;border-left:4px solid #E53935;padding:11px;margin-bottom:8px}
+.obj-q{font-size:13px;font-weight:700;color:#E53935;margin-bottom:7px}
+.fut{position:relative;padding-left:22px}
+.fut:before{content:'';position:absolute;left:5px;top:4px;bottom:0;width:2px;background:linear-gradient(to bottom,#14A44D,#E2B23B)}
+.fi{position:relative;margin-bottom:13px}
+.fi-dot{position:absolute;left:-18px;top:3px;width:11px;height:11px;border-radius:50%;border:2px solid #fff}
+.fi-day{font-size:9px;font-weight:700;color:#14A44D;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.fi-a{font-size:13px;font-weight:700;margin-bottom:3px}
+.fi-n{font-size:12px;color:#5A7A65;line-height:1.5}
+.cl{display:flex;flex-direction:column;gap:7px}
+.ci{display:flex;align-items:flex-start;gap:9px;background:#F0F7F2;border-radius:9px;padding:9px 11px;cursor:pointer}
+.ci input{width:16px;height:16px;accent-color:#0F6B3A;flex-shrink:0;margin-top:1px;cursor:pointer}
+.ci span{font-size:13px;font-weight:500;line-height:1.4}
+.ci.ck span{text-decoration:line-through;color:#5A7A65}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:#1A2E22;color:#fff;padding:9px 18px;border-radius:50px;font-size:12px;font-weight:700;z-index:999;transition:transform .25s;pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="hd">
+  <div class="hd-logo">LL</div>
+  <div>
+    <h1>Sale Playbook AI &middot; L&#7897;c Linh Solar</h1>
+    <p>Paste th&#244;ng tin kh&#225;ch &rarr; AI t&#7841;o k&#7883;ch b&#7843;n</p>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <div class="lbl">&#128203; Paste th&#244;ng tin kh&#225;ch t&#7915; Telegram / Zalo</div>
+    <textarea id="tin" placeholder="D&#225;n n&#7897;i dung t&#7915; Telegram v&#224;o &#273;&#226;y..."></textarea>
+    <div class="btns">
+      <button class="btn-main" id="goBtn" onclick="run()">&#9889; Ph&#226;n t&#237;ch &amp; T&#7841;o k&#7883;ch b&#7843;n</button>
+      <button class="btn-clr" onclick="clr()">Xo&#225;</button>
+    </div>
+  </div>
+</div>
+<div class="spinner" id="spin">
+  <div class="spin"></div>
+  <p style="font-size:13px;color:#5A7A65">AI &#273;ang ph&#226;n t&#237;ch...</p>
+</div>
+<div class="out" id="out">
+  <div class="sec">Th&#244;ng tin kh&#225;ch h&#224;ng</div>
+  <div class="lcard">
+    <div class="lcard-h"><span>&#128293; KH&#193;CH H&#192;NG M&#7898;I &ndash; L&#7896;C LINH SOLAR</span></div>
+    <div class="lfields" id="lf"></div>
+    <div class="ubar"><span>&#9201; G&#7884;I L&#7840;I TRONG 30 PH&#218;T &ndash; KH&#193;CH &#272;ANG N&#211;NG!</span></div>
+  </div>
+  <div class="sec">K&#7883;ch b&#7843;n AI</div>
+  <div class="tabs">
+    <button class="tab on" onclick="sw('ana',this)">Ph&#226;n t&#237;ch</button>
+    <button class="tab" onclick="sw('goi',this)">G&#7885;i l&#7847;n 1</button>
+    <button class="tab" onclick="sw('zalo',this)">Zalo</button>
+    <button class="tab" onclick="sw('obj',this)">T&#7915; ch&#7889;i</button>
+    <button class="tab" onclick="sw('fu',this)">Follow up</button>
+    <button class="tab" onclick="sw('chot',this)">Ch&#7889;t &#273;&#417;n</button>
+  </div>
+  <div class="tc on" id="tc-ana"><div id="c-ana"></div></div>
+  <div class="tc" id="tc-goi"><div id="c-goi"></div></div>
+  <div class="tc" id="tc-zalo"><div id="c-zalo"></div></div>
+  <div class="tc" id="tc-obj"><div id="c-obj"></div></div>
+  <div class="tc" id="tc-fu"><div id="c-fu"></div></div>
+  <div class="tc" id="tc-chot"><div id="c-chot"></div></div>
+  <div class="sec">Checklist x&#7917; l&#253; lead</div>
+  <div class="cl" id="chklist"></div>
+</div>
+<div class="toast" id="toast">&#272;&#227; sao ch&#233;p!</div>
+<script>
+
+var SYS = "Ban la chuyen gia ban hang dien mat troi Loc Linh Solar, Nghe An.\nTHONG TIN: Hotline 0817.345.555, Catalogue https://loclinhsolar.github.io/catalogue/, Bao hanh 25 nam, Tra gop 0% lai suat 100tr.\nGOI SP: <2tr->3-5kWp SVE/LuxPower 25-40tr; 2-4tr->5-8kWp LuxPower/GoodWe 40-70tr; 4-6tr->8-12kWp GoodWe/SolaX 70-110tr; >6tr->12kWp+ SolaX/GoodWe 100-150tr.\nNHAN VIEN: Minh Tuan, Lan Anh.\nYEU CAU: JSON thuan tuy, KHONG markdown, bat dau { ket thuc }. Script phai tieng Viet co dau.\nFORMAT: {\"parsed\":{\"name\":\"\",\"phone\":\"\",\"area\":\"\",\"bill\":\"\",\"power\":\"\",\"need\":\"\",\"timing\":\"\",\"knowledge\":\"\"},\"analysis\":{\"priority\":\"Cao/Trung binh/Thap\",\"reason\":\"\",\"package\":\"\",\"price\":\"\",\"saving\":\"\",\"payback\":\"\",\"insight\":\"\",\"tags\":[]},\"s\":{\"c1\":\"\",\"c2\":\"\",\"c3\":\"\",\"c4\":\"\",\"c5\":\"\",\"z1\":\"\",\"z2\":\"\",\"z3\":\"\",\"o1\":\"\",\"o2\":\"\",\"o3\":\"\",\"o4\":\"\",\"o5\":\"\",\"f1\":\"\",\"f3\":\"\",\"f7\":\"\",\"f14\":\"\",\"f30\":\"\",\"cl1\":\"\",\"cl2\":\"\"}}";
+
+function ex(t, pats, def) {
+  var lines = t.split("\n");
+  for (var i = 0; i < lines.length; i++) {
+    var l = lines[i].toLowerCase();
+    for (var j = 0; j < pats.length; j++) {
+      if (l.indexOf(pats[j].toLowerCase()) >= 0 && lines[i].indexOf(":") >= 0) {
+        var v = lines[i].split(":").slice(1).join(":").replace(/[\[\]]/g,"").replace(/_/g," ").trim();
+        if (v) return v;
+      }
+    }
+  }
+  return def || "--";
+}
+
+function fallback(t) {
+  var nm = ex(t, ["ho ten","name"], "anh/chị");
+  var ph = ex(t, ["sdt","phone"], "--");
+  var ar = ex(t, ["khu vuc","area"], "--");
+  var bi = ex(t, ["tien dien","bill"], "--");
+  return {
+    parsed: {name:nm, phone:ph, area:ar, bill:bi,
+      power: ex(t,["cong suat","power"],"--"),
+      need: ex(t,["nhu cau","need"],"--"),
+      timing: ex(t,["thoi gian","timing"],"--"),
+      knowledge: ex(t,["tim hieu","knowledge"],"--")},
+    analysis: {priority:"Cao", reason:"Cần kiểm tra kết nối mạng",
+      package:"Xem catalogue để xác định", price:"--", saving:"--", payback:"--",
+      insight:"Kết nối mạng để AI phân tích chính xác hơn", tags:["Cần tư vấn"]},
+    s: {
+      c1: "Dạ em chào "+nm+" ạ! Em là [tên bạn] từ Lộc Linh Solar Nghệ An. Anh/chị vừa để lại thông tin điện mặt trời – em gọi lại hỗ trợ tư vấn miễn phí ạ.",
+      c2: "Anh/chị đang dùng điều hòa nhiều không ạ? Em hỏi để tư vấn gói phù hợp nhất cho mình ạ.",
+      c3: "Với tiền điện "+bi+" của nhà mình, bên em có gói phù hợp – tổng đầu tư khoảng [X triệu], tiết kiệm [Y triệu]/tháng. Có trả góp 0% lãi suất đến 100 triệu ạ.",
+      c4: "Bên em khảo sát miễn phí, không ràng buộc. Anh/chị rảnh chiều Thứ Năm hay sáng Thứ Sáu để em sắp xếp kỹ thuật qua thăm ạ?",
+      c5: "Dạ tuyệt! Em nhắn xác nhận lịch qua Zalo ngay ạ. Cảm ơn anh/chị!",
+      z1: "Dạ "+nm+" ơi! Em là [tên] – Lộc Linh Solar vừa gọi điện ạ.\nEm xác nhận lịch khảo sát miễn phí:\nNgày: [ngày] | Giờ: [giờ]\nĐịa chỉ: "+ar+"\nKỹ thuật viên sẽ đến đúng giờ ạ! 🙏",
+      z2: "Dạ "+nm+" ơi, em là [tên] – Lộc Linh Solar.\nEm gọi chưa nghe máy, nhắn lại qua đây ạ.\nAnh/chị rảnh em gọi lại lúc nào ạ? 🙏",
+      z3: "Dạ "+nm+" ơi! Em gửi catalogue sản phẩm:\nhttps://loclinhsolar.github.io/catalogue/\nAnh/chị xem thử rồi mình trao đổi thêm nhé! 🙏",
+      o1: "Dạ anh/chị cần thêm thông tin gì không ạ? Em gửi báo giá qua Zalo để tham khảo – không cần quyết định ngay ạ.",
+      o2: "Dạ anh/chị đang so sánh với bên nào ạ? Thiết bị khác nhau thì giá khác lắm. Bên em chính hãng bảo hành 10-25 năm ạ.",
+      o3: "Dạ không sao ạ. Giá điện EVN đang tăng – mình khảo sát trước miễn phí để có số liệu, khi nào quyết định là làm ngay ạ.",
+      o4: "Dạ phải khảo sát thực tế mới biết chính xác – bên em làm miễn phí. Nhiều nhà tưởng không được nhưng vẫn lắp tốt ạ.",
+      o5: "Dạ xin lỗi đã làm phiền! Anh/chị rảnh em gọi lại lúc mấy giờ chiều nay ạ?",
+      f1: "Gọi ngay khi nhận thông báo. Không nghe máy → nhắn Zalo ngay.",
+      f3: "Dạ "+nm+" ơi! Em gửi ảnh công trình thực tế + hóa đơn điện giảm của khách cũ ở Nghệ An để tham khảo ạ! 🏠☀️",
+      f7: "Dạ "+nm+" xem báo giá bên em thế nào rồi ạ? Anh/chị còn câu hỏi gì em hỗ trợ thêm nhé! 😊",
+      f14: "Gọi lại – hỏi thẳng còn vướng mắc gì. Đây là cơ hội chốt cuối – đừng bỏ.",
+      f30: "Dạ "+nm+" ơi! Tháng này bên em có ưu đãi – anh/chị muốn em gửi thông tin không ạ?",
+      cl1: "Dạ "+nm+" ơi, em vừa tổng hợp xong báo giá rồi ạ.\nVới hệ [X kWp], tổng đầu tư [Y triệu].\nAnh/chị muốn em giữ lịch thi công tháng này không? Còn 2 slot thôi ạ.",
+      cl2: "Dạ "+nm+" ơi! Em xác nhận đơn hàng:\n⚡ Hệ thống: [X kWp] – [tên gói]\n💰 Tổng: [Y triệu] | 📅 Thi công: [ngày]\n🔧 Bảo hành: 25 năm\nAnh/chị xác nhận để em làm hợp đồng nhé! 🙏☀️"
+    }
+  };
+}
+
+function esc(t) { return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function rnd() { return Math.random().toString(36).slice(2,7); }
+
+function sb(lbl, color, txt) {
+  var id = "s" + rnd();
+  var bid = "b" + id;
+  var el = document.createElement("div");
+  el.className = "sb";
+  el.innerHTML = "<div class=\"sb-l\" style=\"color:" + color + "\">" + lbl + "</div>"
+    + "<div class=\"sb-txt\" id=\"" + id + "\">" + esc(txt) + "</div>";
+  var btn = document.createElement("button");
+  btn.className = "cpbtn";
+  btn.id = bid;
+  btn.textContent = "Sao ch\u00e9p";
+  btn.onclick = function() {
+    var txt2 = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(txt2).then(function() {
+      btn.textContent = "Xong \u2713"; btn.classList.add("ok");
+      setTimeout(function() { btn.textContent = "Sao ch\u00e9p"; btn.classList.remove("ok"); }, 2000);
+      var t = document.getElementById("toast"); t.classList.add("on");
+      setTimeout(function() { t.classList.remove("on"); }, 2000);
+    });
+  };
+  el.insertBefore(btn, el.querySelector(".sb-txt"));
+  return el.outerHTML;
+}
+
+function step(n, col, title, time, body) {
+  var id = "st" + rnd();
+  var el = document.createElement("div");
+  el.className = "step";
+  el.id = id;
+  var hdr = document.createElement("div");
+  hdr.className = "step-h";
+  hdr.innerHTML = "<div class=\"snum\" style=\"background:" + col + "\">" + n + "</div>"
+    + "<div style=\"flex:1\"><div class=\"si-t\">" + title + "</div><div class=\"si-s\">" + time + "</div></div>"
+    + "<div class=\"sarr\">\u203a</div>";
+  hdr.addEventListener("click", function() { el.classList.toggle("op"); });
+  var bdy = document.createElement("div");
+  bdy.className = "step-b";
+  bdy.innerHTML = body;
+  el.appendChild(hdr);
+  el.appendChild(bdy);
+  return el.outerHTML;
+}
+
+function obj(q, sc) {
+  var inner = sb("TR\u1ea2 L\u1edcI", "#14A44D", sc);
+  var el = document.createElement("div");
+  el.className = "obj";
+  el.innerHTML = "<div class=\"obj-q\">" + q + "</div>" + inner;
+  return el.outerHTML;
+}
+
+function fi(day, action, note, hasSb, dot) {
+  var inner = hasSb ? sb("N\u1ed8I DUNG TIN NH\u1eafN", "#0068FF", note)
+    : "<div class=\"fi-n\">" + esc(note) + "</div>";
+  return "<div class=\"fi\">"
+    + "<div class=\"fi-dot\" style=\"background:" + dot + ";box-shadow:0 0 0 2px " + dot + "\"></div>"
+    + "<div class=\"fi-day\">" + day + "</div>"
+    + "<div class=\"fi-a\">" + action + "</div>"
+    + inner + "</div>";
+}
+
+function render(d) {
+  var p = d.parsed, a = d.analysis, s = d.s;
+
+  var FLDS = [
+    {l:"H\u1ecd t\u00ean", v:p.name, hot:true},
+    {l:"S\u0110T", v:p.phone, hot:true},
+    {l:"Khu v\u1ef1c", v:p.area, full:true},
+    {l:"Ti\u1ec1n \u0111i\u1ec7n/th\u00e1ng", v:p.bill},
+    {l:"C\u00f4ng su\u1ea5t", v:p.power},
+    {l:"Nhu c\u1ea7u", v:p.need},
+    {l:"Th\u1eddi gian", v:p.timing, hot:true},
+    {l:"T\u00ecm hi\u1ec3u", v:p.knowledge, full:true}
+  ];
+  document.getElementById("lf").innerHTML = FLDS.map(function(f) {
+    return "<div class=\"lf" + (f.full ? " full" : "") + "\">"
+      + "<div class=\"lf-l\">" + f.l + "</div>"
+      + "<div class=\"lf-v" + (f.hot ? " hot" : "") + "\">" + esc(f.v || "--") + "</div></div>";
+  }).join("");
+
+  var pc = a.priority === "Cao" ? "g" : "w";
+  document.getElementById("c-ana").innerHTML =
+    "<div class=\"ana-box\"><div class=\"ana-t\">\u0110\u00c1NH GI\u00c1 LEAD N\u00c0Y</div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">M\u1ee9c \u0111\u1ed9 \u01b0u ti\u00ean</span><span class=\"ar-r " + pc + "\">" + esc(a.priority) + " &ndash; " + esc(a.reason) + "</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">G\u00f3i ph\u00f9 h\u1ee3p</span><span class=\"ar-r g\">" + esc(a.package) + "</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">T\u1ed5ng \u0111\u1ea7u t\u01b0</span><span class=\"ar-r\">" + esc(a.price) + "</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">Ti\u1ebft ki\u1ec7m/th\u00e1ng</span><span class=\"ar-r g\">" + esc(a.saving) + "</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">Ho\u00e0n v\u1ed1n</span><span class=\"ar-r\">" + esc(a.payback) + "</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">L\u01b0u \u00fd t\u01b0 v\u1ea5n</span><span class=\"ar-r w\">" + esc(a.insight) + "</span></div>"
+    + "</div><div class=\"tags\">"
+    + (a.tags || []).map(function(t) { return "<span class=\"tag\">" + esc(t) + "</span>"; }).join("")
+    + "</div>";
+
+  document.getElementById("c-goi").innerHTML =
+    step(1,"#E53935","M\u1edf \u0111\u1ea7u \u2013 X\u00e1c nh\u1eadn danh t\u00ednh","0:00 \u2013 0:30",sb("SCRIPT M\u1edc \u0110\u1ea6U","#0F6B3A",s.c1))
+    + step(2,"#F57C00","Khai th\u00e1c nhu c\u1ea7u","0:30 \u2013 1:30",sb("SCRIPT KHAI TH\u00c1C","#0F6B3A",s.c2))
+    + step(3,"#14A44D","\u0110\u1ec1 xu\u1ea5t g\u00f3i + b\u00e1o gi\u00e1","1:30 \u2013 2:30",sb("SCRIPT \u0110\u1ec0 XU\u1ea4T","#0F6B3A",s.c3))
+    + step(4,"#0F6B3A","Ch\u1ed1t l\u1ecbch kh\u1ea3o s\u00e1t \u2013 QUAN TR\u1eccNG","2:30 \u2013 3:00",
+        sb("CH\u1ed0T L\u1ecaCH","#0F6B3A",s.c4) + sb("N\u1ebeU KH\u00c1CH \u0110\u1ed2NG \u00dd","#14A44D",s.c5));
+
+  document.getElementById("c-zalo").innerHTML =
+    sb("ZALO SAU G\u1ecci \u2013 \u0110\u1ed2NG \u00dd KH\u1ea2O S\u00c1T","#0068FF",s.z1)
+    + sb("ZALO N\u1ebeU KH\u00d4NG NGHE M\u00c1Y","#0068FF",s.z2)
+    + sb("ZALO G\u1ee6I CATALOGUE NG\u00c0Y H\u00d4M SAU","#0068FF",s.z3);
+
+  document.getElementById("c-obj").innerHTML =
+    obj("\u0110\u1ec3 t\u00f4i suy ngh\u0129 th\u00eam \u0111\u00e3", s.o1)
+    + obj("\u0110\u1eaft qu\u00e1, b\u00ean kh\u00e1c r\u1ebb h\u01a1n", s.o2)
+    + obj("Ch\u01b0a c\u1ea7n v\u1ed9i, \u0111\u1ec3 sau", s.o3)
+    + obj("Nh\u00e0 t\u00f4i kh\u00f4ng bi\u1ebft c\u00f3 l\u1eafp \u0111\u01b0\u1ee3c kh\u00f4ng", s.o4)
+    + obj("G\u1ecdi l\u1ea1i sau, t\u00f4i \u0111ang b\u1eadn", s.o5);
+
+  document.getElementById("c-fu").innerHTML = "<div class=\"fut\">"
+    + fi("Trong 30 ph\u00fat \u0111\u1ea7u","G\u1ecdi \u0111i\u1ec7n l\u1ea7n 1",s.f1,false,"#E53935")
+    + fi("Ng\u00e0y 3","G\u1eedi Zalo \u1ea3nh c\u00f4ng tr\u00ecnh + h\u00f3a \u0111\u01a1n gi\u1ea3m",s.f3,true,"#14A44D")
+    + fi("Ng\u00e0y 7","Zalo h\u1ecfi th\u0103m",s.f7,true,"#14A44D")
+    + fi("Ng\u00e0y 14","G\u1ecdi \u0111i\u1ec7n l\u1ea7n 2",s.f14,false,"#E2B23B")
+    + fi("Ng\u00e0y 30","Tin nh\u1eafn cu\u1ed1i \u2013 \u01b0u \u0111\u00e3i",s.f30,true,"#E2B23B")
+    + "</div>";
+
+  document.getElementById("c-chot").innerHTML =
+    sb("G\u1ecci SAU KH\u1ea2O S\u00c1T \u2013 TRONG 24H","#0F6B3A",s.cl1)
+    + sb("ZALO X\u00c1C NH\u1eacN \u0110\u01a0N H\u00c0NG","#0068FF",s.cl2)
+    + "<div class=\"ana-box\" style=\"margin-top:11px\"><div class=\"ana-t\">NGUY\u00caN T\u1eacC CH\u1ed0T \u0110\u01a0N</div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">\u0110\u1eebng h\u1ecfi: c\u00f3 mua kh\u00f4ng?</span><span class=\"ar-r g\">H\u1ecfi: gi\u1eef l\u1ecbch th\u00e1ng n\u00e0y kh\u00f4ng?</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">T\u1ea1o khan hi\u1ebfm nh\u1eb9</span><span class=\"ar-r g\">C\u00f2n 2 slot thi c\u00f4ng th\u00e1ng n\u00e0y</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">Nh\u1ea5n v\u00e0o ROI</span><span class=\"ar-r g\">D\u01b0\u01a1ng ti\u1ec1n t\u1eeb th\u00e1ng \u0111\u1ea7u</span></div>"
+    + "<div class=\"ar\"><span class=\"ar-l\">Sau \u0111\u1ec1 ngh\u1ecb \u2192 im l\u1eb7ng</span><span class=\"ar-r g\">Ai n\u00f3i tr\u01b0\u1edbc ng\u01b0\u1eddi \u0111\u00f3 thua</span></div>"
+    + "</div>";
+
+  var CKS = [
+    "G\u1ecdi trong 30 ph\u00fat \u0111\u1ea7u",
+    "Nh\u1eafn Zalo n\u1ebfu kh\u00f4ng nghe m\u00e1y",
+    "X\u00e1c nh\u1eadn: ti\u1ec1n \u0111i\u1ec7n, \u0111\u1ecba ch\u1ec9 ch\u00ednh x\u00e1c",
+    "\u0110\u1ec1 xu\u1ea5t g\u00f3i ph\u00f9 h\u1ee3p theo k\u1ecbch b\u1ea3n AI",
+    "Ch\u1ed1t l\u1ecbch kh\u1ea3o s\u00e1t mi\u1ec5n ph\u00ed",
+    "G\u1eedi catalogue + b\u00e1o gi\u00e1 qua Zalo",
+    "Nh\u1eadp l\u1ecbch follow up ng\u00e0y 3, 7, 14"
+  ];
+  var chklist = document.getElementById("chklist");
+  chklist.innerHTML = "";
+  CKS.forEach(function(label, i) {
+    var div = document.createElement("div");
+    div.className = "ci";
+    div.innerHTML = "<input type=\"checkbox\"><span>" + label + "</span>";
+    div.addEventListener("click", function() {
+      this.classList.toggle("ck");
+      this.querySelector("input").checked = this.classList.contains("ck");
+    });
+    chklist.appendChild(div);
+  });
+
+  document.getElementById("out").classList.add("on");
+  document.getElementById("out").scrollIntoView({behavior:"smooth"});
+}
+
+async function run() {
+  var txt = document.getElementById("tin").value.trim();
+  if (!txt) { alert("Vui long paste thong tin khach hang vao!"); return; }
+  document.getElementById("goBtn").disabled = true;
+  document.getElementById("spin").classList.add("on");
+  document.getElementById("out").classList.remove("on");
+  var d;
+  try {
+    var res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4000,
+        system: SYS,
+        messages: [{role:"user", content:"Phan tich lead sau, tra ve JSON thuan tuy:\n\n" + txt}]
+      })
+    });
+    var raw = await res.json();
+    if (raw.error) throw new Error(raw.error.message);
+    var t = raw.content[0].text;
+    var a = t.indexOf("{"), b = t.lastIndexOf("}");
+    d = JSON.parse(t.slice(a, b + 1));
+  } catch(e) {
+    console.warn("fallback:", e.message);
+    d = fallback(txt);
+  }
+  render(d);
+  document.getElementById("spin").classList.remove("on");
+  document.getElementById("goBtn").disabled = false;
+}
+
+function clr() {
+  document.getElementById("tin").value = "";
+  document.getElementById("out").classList.remove("on");
+}
+function sw(id, btn) {
+  document.querySelectorAll(".tc").forEach(function(t) { t.classList.remove("on"); });
+  document.querySelectorAll(".tab").forEach(function(b) { b.classList.remove("on"); });
+  document.getElementById("tc-" + id).classList.add("on");
+  btn.classList.add("on");
+}
+function tog(id) { document.getElementById(id).classList.toggle("op"); }
+
+</script>
+</body>
+</html>
